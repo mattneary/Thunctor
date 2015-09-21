@@ -4,29 +4,21 @@ class Thunk(object):
         def h(*args, **kwargs):
             return f(g(*args, **kwargs))
         return h
-    def _fmap(self, x, fns):
-        if getattr(x, 'IS_THUNK', False):
-            return x.map_many(fns)
-        else:
-            res = x
-            for fn in reversed(fns):
-                res = fn(res)
-            return res
-    def __init__(self, action, *args, **kwargs):
-        self.action = action
-        self.args = args;
-        self.kwargs = kwargs
+    def __init__(self, val):
+        self.val = val
         self.mapper = []
-    def unroll(self):
-        return self._fmap(self.action(*self.args, **self.kwargs), self.mapper)
-    def map(self, fn):
-        return self.map_many([fn])
-    def map_many(self, fns):
+    def bind(self, fn):
+        return self.bind_many([fn])
+    def bind_many(self, fns):
         self.mapper = fns + self.mapper
         return self
-    @classmethod
-    def val(cls, x):
-        return cls(lambda x: x, x)
+    def unroll(self):
+        if not self.mapper:
+            return self.val
+        else:
+            return self.mapper[-1](self.val).bind_many(self.mapper[:-1])
+    def map(self, fn):
+        return self.bind(lambda x: Thunk(fn(x)))
 
 def think(fn):
     def partial(*args, **kwargs):

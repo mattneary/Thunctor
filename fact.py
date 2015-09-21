@@ -1,11 +1,11 @@
 from lib.thunctor import Thunk, think
 
 @think
-def count(me, n):
+def fact(me, n):
     if not n:
-        return Thunk.val(0)
+        return Thunk(1)
     else:
-        return Thunk(me, n-1).map(lambda x: x + 1)
+        return Thunk(n-1).bind(me).map(lambda x: x * n)
 
-print(count(1000))
+print(fact(6))
 
