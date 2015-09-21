@@ -1,6 +1,6 @@
-from lib.thunctor import Thunk, think
+from lib.thunctor import Thunk, unroll
 
-@think
+@unroll
 def fact(me, n):
     if not n:
         return Thunk(1)
