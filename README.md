@@ -1,6 +1,6 @@
 # thunctor
 
-Avoid `maximum recursion depth exceeded` errors in Python with thunks.
+Safe recursion with monads.
 
 ```python
 @think
