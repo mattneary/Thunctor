@@ -1,9 +1,5 @@
 class Thunk(object):
     IS_THUNK = True
-    def _compose(self, f, g):
-        def h(*args, **kwargs):
-            return f(g(*args, **kwargs))
-        return h
     def __init__(self, val):
         self.val = val
         self.mapper = []
