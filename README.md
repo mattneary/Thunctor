@@ -10,6 +10,10 @@ def fact(me, n):
         else Thunk(n-1).bind(me).map(lambda x: x * n))
 ```
 
+```sh
+$ pip install thunctor
+```
+
 ## The Thunk Monad
 
 The thunk monad allows for a lazy value to be constructed whose manipulations
