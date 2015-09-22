@@ -14,6 +14,7 @@ class Thunk(object):
         if not self.mapper:
             return self.val
         else:
+            assert not isinstance(self.val, Thunk)
             return self.mapper[-1](self.val).bind_many(self.mapper[:-1])
 
 def unroll(fn):
