@@ -1,4 +1,4 @@
-from lib.thunctor import Thunk, unroll
+from thunctor import Thunk, unroll
 
 @unroll
 def count(me, n):
