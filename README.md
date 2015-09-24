@@ -7,7 +7,7 @@ Safe recursion with monads.
 def fact(me, n):
     return (Thunk(1)
         if not n
-        else Thunk(n-1).bind(me).map(lambda x: x * n))
+        else me(n-1).map(lambda x: x * n))
 ```
 
 ```sh

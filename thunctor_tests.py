@@ -9,6 +9,16 @@ class ThunkTest(unittest.TestCase):
         thunk2 = unroll(lambda me: b)()
         self.assertEqual(thunk1, thunk2)
 
+class TestUnroll(ThunkTest):
+    def testUnroll(self):
+        @unroll
+        def count(me, n):
+            if not n:
+                return Thunk(0)
+            else:
+                return me(n - 1).map(lambda x: x + 1)
+        self.assertEqual(100, count(100))
+
 class TestMonadLaws(ThunkTest):
     def test_law1(self):
         add = lambda a: lambda b: Thunk(a + b)
